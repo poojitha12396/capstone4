@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from app.models import Profile
 import pdfkit
 from django.template import loader
@@ -18,6 +18,7 @@ def accept(request):
         skills=request.POST.get("skills")
         profile=Profile(name=name,email=email,phone=phone,summary=about,degree=degree,university=university,school=school,previous_work=previous_work,skills=skills)
         profile.save()
+        return redirect('resume', id=profile.id)
     return render(request,'app/accept.html')
 def resume(request,id):
     user_profile=Profile.objects.get(id=id)
